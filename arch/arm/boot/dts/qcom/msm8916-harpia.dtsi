@@ -1,0 +1,508 @@
+/* Copyright (c) 2014, Motorola Mobility LLC. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 and
+* only version 2 as published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*/
+
+#include "msm8916-moto-common.dtsi"
+#include "dsi-panel-mot-boe-499-720p-video.dtsi"
+#include "dsi-panel-mot-tianma-499-720p-video.dtsi"
+#include  "msm8916-harpia-dtv.dtsi"
+#include "msm8916-camera-sensor-harpia.dtsi"
+/ {
+	model = "Motorola Mobility MSM 8916 Harpia";
+	compatible = "qcom,msm8916-harpia", "qcom,msm8916-moto", "qcom,msm8916";
+	aliases {
+		i2c3 = &i2c_3;
+	};
+};
+
+&tlmm_pinmux {
+	pmx_i2c_3 {
+		/* CLK, DATA */
+		qcom,pins = <&gp 11>, <&gp 10>;
+		qcom,num-grp-pins = <2>;
+		qcom,pin-func = <2>;
+		label = "pmx_i2c_3";
+		/* active state */
+		i2c_3_active: i2c_3_active{
+			drive-strength = <2>; /* 2 MA */
+			bias-disable; /* No PULL */
+		};
+		/* suspended state */
+		i2c_3_sleep: i2c_3_sleep {
+			drive-strength = <2>; /* 2 MA */
+			bias-disable; /* No PULL */
+		};
+	};
+
+	pmx_nfc_irq {
+		qcom,pins = <&gp 9>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "nfc_irq";
+
+		nfc_irq_default: default {
+			bias-pull-down;
+			drive-strength = <2>;
+		};
+	};
+
+	pmx_nfc_pwr {
+		qcom,pins = <&gp 36>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "nfc_pwr";
+
+		nfc_pwr_default: default {
+			bias-pull-down;
+			output-low;
+			drive-strength = <2>;
+		};
+	};
+
+	pmx_nfc_en {
+		qcom,pins = <&gp 8>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "nfc_en";
+
+		nfc_en_default: default {
+			bias-pull-down;
+			output-low;
+			drive-strength = <2>;
+		};
+	};
+	touch_reset_n {
+		qcom,pins = <&gp 12>;
+	};
+
+	touch_int_n {
+		qcom,pins = <&gp 13>;
+	};
+	bma25x_int1_pin {
+		qcom,pins = <&gp 115>;
+		qcom,pin-func = <0>;
+		qcom,num-grp-pins = <1>;
+		label = "bma25x_int1_pin";
+		bma25x_int1_default: int1_default {
+			drive-strength = <6>;
+			bias-pull-up;
+		};
+		bma25x_int1_sleep: int1_sleep {
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};
+	bma25x_int2_pin {
+		qcom,pins = <&gp 119>;
+		qcom,pin-func = <0>;
+		qcom,num-grp-pins = <1>;
+		label = "bma25x_int2_pin";
+		bma25x_int2_default: int2_default {
+			drive-strength = <6>;
+			bias-pull-up;
+		};
+		bma25x_int2_sleep: int2_sleep {
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};
+        epl8802_active {
+		/* interrupt */
+		qcom,pins = <&gp 113>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "epl8802-active";
+		/* active state */
+		epl8802_active: epl8802_active {
+			drive-strength = <2>; /* 2 MA */
+			bias-disable; /* No PULL */
+		};
+	};
+	epl8802_suspend {
+		/* interrupt  */
+		qcom,pins = <&gp 113> ;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <1>;
+		label = "epl8802-suspend";
+		/*suspended state */
+		epl8802_suspend: epl8802_suspend {
+			drive-strength = <2>; /* 2 MA */
+			bias-disable; /* No PULL */
+		};
+	};
+	cross-conn-det {
+		qcom,pins = <&gp 112>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "cross-conn-det-sw";
+		cross_conn_det_act: lines_on {
+			drive-strength = <8>;
+			output-low;
+			bias-pull-down;
+		};
+		cross_conn_det_sus: lines_off {
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+	cross-conn-en {
+		qcom,pins = <&gp 111>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "cross-conn-det-en";
+		cross_conn_en_act: lines_on {
+			drive-strength = <8>;
+			output-low;
+			bias-pull-down;
+		};
+		cross_conn_en_sus: lines_off {
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+	cc_alert {
+		qcom,pins = <&gp 62>;
+	};
+	bq24296_int_pin {
+		qcom,pins = <&gp 120>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "bq24296_int_gpio";
+		bq24296_int_default: bq24296_int_default {
+			drive-strength = <2>;	/* 2 MA */
+			bias-pull-up;		/* PULL UP*/
+		};
+	};
+	sdhc2_cd_pin {
+		qcom,pins = <&gp 118>;
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "cd-gpio";
+		sdc2_cd_on: cd_on {
+			/delete-property/ bias-pull-up;
+			bias-disable;
+		};
+	};
+};
+
+&spi_0 {
+	status = "disabled";
+};
+
+&i2c_1 {
+	tps65132@3e {
+		/* nt50358 is compatible with tps65132
+                 * So, use same driver, but nt50358 needs two enable pins to be high first,
+                 * then registers can be R/W.
+                 */
+		compatible = "ti,tps65132";
+		reg = <0x3e>;
+		ti,en-gpio-lpm;
+		ti,nt50358;
+
+		regulators {
+			tps65132_pos: pos-boost {
+				regulator-name = "tps65132-pos";
+				regulator-min-microvolt = <5000000>;
+				regulator-max-microvolt = <5500000>;
+				ti,discharge-enable;
+				ti,en-gpio = <&msm_gpio 97 0>;
+			};
+
+			tps65132_neg: neg-boost {
+				regulator-name = "tps65132-neg";
+				regulator-min-microvolt = <5000000>;
+				regulator-max-microvolt = <5500000>;
+				ti,discharge-enable;
+				ti,en-gpio = <&msm_gpio 98 0>;
+			};
+		};
+	};
+
+	fan54046: fan54046-charger@6b {
+		status = "disabled";
+	};
+	bq24296: bq24296-charger@6b {
+		compatible = "ti,bq24296-charger";
+		reg = <0x6b>;
+
+		qcom,bq24296-vadc = <&pm8916_vadc>;
+		qcom,bq24296-adc_tm = <&pm8916_adc_tm>;
+
+		ti,bms-psy-name = "max170xx_battery";
+		ti,ext-temp-volt-mv = <4200>;
+		ti,oreg-voltage-mv = <4400>;
+		ti,low-voltage-uv = <3000000>;
+		ti,vin-limit-mv = <4540>;
+		ti,input-current-limit = <2000>;
+		ti,sys-vmin-mv = <3500>;
+		ti,chg-current-ma = <2000>;
+		ti,chg-safety-timer = <3>;
+		regulator-name = "bq24296_otg_vreg";
+		ti,chg-thermal-mitigation = <2000>, <1300>, <800>, <500>;
+
+		gpios = <&pm8916_gpios 4 0x00>, /* GPIOF_OUT_INIT_LOW*/
+			<&msm_gpio 120 0x01>; 	/* GPIOF_DIR_IN */
+
+		gpio-names = "bq24296_en_pin",
+			     "bq24296_int_pin";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&bq24296_int_default>;
+	};
+
+	max17050: max17050-battery@36 {
+		compatible = "maxim,max17050";
+		reg = <0x36>;
+		maxim,rsns-microohm = <10000>;
+
+		interrupt-parent = <&msm_gpio>;
+		interrupts = <62 0x0>;
+		gpios = <&msm_gpio 62 0x11>; /* GPIOF_DIR_IN|GPIOF_EXPORT */
+		gpio-names = "cc-alert";
+
+		maxim,enable_por_init;
+		maxim,batt_undervoltage_zero_soc;
+		maxim,batt-psy-name = "battery";
+		maxim,warm-temp-c = <45>;
+		maxim,hot-temp-c = <60>;
+		maxim,cool-temp-c = <0>;
+		maxim,cold-temp-c = <(-20)>;
+
+		maxim,valrt-threshold = <0xffa0>; /* Vmin 3.2V */
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&cc_alert_default>;
+
+		maxim,configuration {
+			df-serialnum	= "SNN5976A";
+
+			 /include/ "batterydata-bl259-atl.dtsi"
+
+		};
+
+		maxim,temp-conv {
+			start	= /bits/ 16 <(-25)>;	/* in degrees C */
+			result	= /bits/ 16 <
+				/* 1/10th C "real" temps corresponding start, start + 1, etc. fuel gauge temps in C */
+				(-400) (-391) (-362) (-335) (-310) (-288) (-266) (-246) (-228) (-210)	/* -25 C ... -16 C */
+			        (-193) (-176) (-161) (-146) (-132) (-118) (-104)  (-91)  (-78)  (-66)	/* -15 C ... -6 C */
+				(-54)  (-42)  (-31)  (-20)   (-9)  2      13     23     33     43	/*  -5 C ...  4 C */
+				53     63     73     82     87	   102    111    121    130    140	/*  5 C ...  14 C */
+				149    159    168    177    187    196    205    215    224    233	/*  15 C ...  24 C */
+				243    252    262    271    281	   291    300    310    320    330 	/*  25 C ...  34 C */
+				341    351    361    372    383    394    405    416    427    439 	/*  35 C ...  44 C */
+				451    463    475    488    501    514    528    542    556    571 	/*  45 C ...  54 C */
+				586    602    618    635    653    671    690    710    732		/*  55 C ...  63 C */
+			>;
+		};
+	};
+};
+
+&soc {
+
+	i2c_3: i2c@78b7000 { /* BLSP1 QUP3 */
+		compatible = "qcom,i2c-msm-v2";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg-names = "qup_phys_addr", "bam_phys_addr";
+		reg = <0x78b7000 0x600>,
+		      <0x7884000 0x23000>;
+		interrupt-names = "qup_irq", "bam_irq";
+		interrupts = <0 97 0>, <0 238 0>;
+		clocks = <&clock_gcc clk_gcc_blsp1_ahb_clk>,
+			 <&clock_gcc clk_gcc_blsp1_qup3_i2c_apps_clk>;
+		clock-names = "iface_clk", "core_clk";
+		qcom,clk-freq-out = <400000>;
+		qcom,clk-freq-in  = <19200000>;
+		pinctrl-names = "i2c_active", "i2c_sleep";
+		pinctrl-0 = <&i2c_3_active>;
+		pinctrl-1 = <&i2c_3_sleep>;
+		qcom,noise-rjct-scl = <0>;
+		qcom,noise-rjct-sda = <0>;
+		qcom,bam-pipe-idx-cons = <8>;
+		qcom,bam-pipe-idx-prod = <9>;
+		dmas = <&dma_blsp1 8 64 0x20000020 0x20>,
+			<&dma_blsp1 9 32 0x20000020 0x20>;
+		dma-names = "tx", "rx";
+		qcom,master-id = <86>;
+	};
+	sound {
+		qcom,msm-mbhc-gnd-swh = <1>;
+		/delete-property/ qcom,msm-micbias2-ext-cap;
+		qcom,audio-routing =
+			"RX_BIAS", "MCLK",
+			"SPK_RX_BIAS", "MCLK",
+			"INT_LDO_H", "MCLK",
+			"MIC BIAS External", "Handset Mic",
+			"MIC BIAS Internal2", "Headset Mic",
+			"MIC BIAS External", "Secondary Mic",
+			"AMIC1", "MIC BIAS External",
+			"AMIC2", "MIC BIAS Internal2",
+			"AMIC3", "MIC BIAS External";
+		pinctrl-names = "cdc_lines_act",
+				"cdc_lines_sus",
+				"cross_conn_det_act",
+				"cross_conn_det_sus";
+		pinctrl-0 = <&cdc_pdm_lines_act>;
+		pinctrl-1 = <&cdc_pdm_lines_sus>;
+		pinctrl-2 = <&cross_conn_det_act>;
+		pinctrl-3 = <&cross_conn_det_sus>;
+		qcom,cdc-us-euro-gpios = <&msm_gpio 112 0x0>;
+		qcom,cdc-headset-en-gpios = <&msm_gpio 111 0x0>;
+	};
+
+	/delete-node/ qcom,msm-pcm-low-latency;
+	pcm1: qcom,msm-pcm-low-latency {
+		compatible = "qcom,msm-pcm-dsp";
+		qcom,msm-pcm-dsp-id = <1>;
+		qcom,msm-pcm-low-latency;
+	};
+};
+&pm8916_l6 {
+	regulator-boot-on;
+        regulator-always-on;
+};
+
+&mdss_dsi0 {
+	qcom,platform-reset-gpio = <&msm_gpio 25 0>;
+	qcom,platform-bklight-en-gpio = <&msm_gpio 37 0>;
+	qcom,regulator-ldo-mode;
+	qcom,platform-regulator-settings =  [00 01 01 00 20 07 00];
+	qcom,dsi-pref-prim-pan = <&mot_boe_499_720p_vid_v0>;
+	vddio_disp-supply = <&pm8916_l6>;
+	vsp_disp-supply = <&tps65132_pos>;
+	vsn_disp-supply = <&tps65132_neg>;
+};
+
+&i2c_2 {
+	synaptics_dsx_i2c@20 {
+		interrupts = <13 0>;
+		gpios = <&msm_gpio 13 0>, /* IRQ */
+			<&msm_gpio 12 0>; /* RESET */
+	};
+};
+
+&i2c_3 { /* BLSP1 QUP3 */
+	status = "okay";
+	/* BCM 20795 NFC Controller */
+	bcm2079x@77 {
+		status = "/chosen", "mmi,nfc", "true";
+		compatible = "brcm,bcm2079x";
+		reg = <0x77>;
+		interrupt-parent = <&msm_gpio>;
+		interrupts = <9 0>; 		/* NFC_IRQ */
+		gpios = <&msm_gpio 8 0>, 	/* NFC_ENABLE_IN */
+			<&msm_gpio 9 0>, 		/* NFC_IRQ */
+			<&msm_gpio 36 0>; 		/* NFC_POWER_ON */
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&nfc_irq_default &nfc_pwr_default &nfc_en_default>;
+
+		qcom,clk-gpio = <&pm8916_gpios 2 0>;
+		clocks = <&clock_rpm clk_bb_clk2_pin>;
+		clock-names = "ref_clk";
+	};
+};
+
+&i2c_4 { /* BLSP1 QUP4 */
+	bosch@19 { /* Accelerometer sensor */
+		compatible = "bosch,bma253";
+		reg = <0x19>;
+		pinctrl-names = "default","sleep";
+		pinctrl-0 = <&bma25x_int1_default &bma25x_int2_default>;
+		pinctrl-1 = <&bma25x_int1_sleep &bma25x_int2_sleep>;
+		interrupt-parent = <&msm_gpio>;
+		interrupts = <115 0x2002>;
+		vdd-supply = <&pm8916_l17>;
+		vio-supply = <&pm8916_l6>;
+		bosch,init-interval = <200>;
+		bosch,place = <4>;
+		bosch,gpio-int1 = <&msm_gpio 115 0x2002>;
+		bosch,gpio-int2 = <&msm_gpio 119 0x2002>;
+	};
+
+	elan@49 {
+		compatible = "epl,epl8802";
+		reg = <0x49>;
+		epl,irq-gpio = <&msm_gpio 113 0x00>;
+		pinctrl-names = "epl8802_default", "epl8802_suspend";
+		pinctrl-0 = <&epl8802_active>;
+		pinctrl-1 = <&epl8802_suspend>;
+		vdd-supply = <&pm8916_l17>;
+		vio-supply = <&pm8916_l6>;
+		epl,wait_time = <0x09>;
+		epl,dt_st_gain = <5>;
+		epl,als_c_gain = <480>;
+		epl,ps_eg_sign = <1>;
+		epl,ps_intt = <1>;
+		epl,ps_gain = <0x01>;
+		epl,ps_cycle = <0x04>;
+		epl,ps_ir_drive = <0x01>;
+		epl,ps_low_threshold = <1800>;
+		epl,ps_high_threshold = <2300>;
+		epl,ps_max_ct = <2300>;
+		epl,ps_dyn_l_offset = <280>;
+		epl,ps_dyn_h_offset = <372>;
+		epl,ps_rs = <0>;
+	};
+};
+&usb_otg {
+	vbus_otg-supply = <&bq24296>;
+};
+
+&pm8916_gpios {
+	gpio@c100 { /* GPIO 2 */
+		status = "okay";
+		qcom,mode = <0>;	/* QPNP_PIN_MODE_DIG_OUT */
+		qcom,output-type = <0>;	/* CMOS logic */
+		qcom,invert = <0>;	/* Output low initially */
+		qcom,pull = <4>; 	/* QPNP_PIN_PULL_DOWN */
+		qcom,vin-sel = <2>; 	/* QPNP_PIN_VIN2 */
+		qcom,out-strength = <3>;/* High */
+		qcom,src-sel = <0>; 	/* QPNP_PIN_SEL_FUNC_CONSTANT */
+		qcom,master-en = <1>;	/* Enable this pin */
+	};
+	gpio@c300 { /* GPIO 4 */
+		status = "okay";
+		qcom,mode = <1>;	/* QPNP_PIN_MODE_DIG_OUT */
+		qcom,output-type = <0>;	/* CMOS logic */
+		qcom,invert = <0>;	/* Output low initially */
+		qcom,pull = <5>; 	/* QPNP_PIN_PULL_NO */
+		qcom,vin-sel = <2>; 	/* QPNP_PIN_VIN2 */
+		qcom,out-strength = <2>;/* medimu */
+		qcom,src-sel = <0>; 	/* QPNP_PIN_SEL_FUNC_CONSTANT */
+		qcom,master-en = <1>;	/* enalbe this pin */
+	};
+};
+
+&secure_mem {
+	reg = <0 0 0 0x3C00000>;
+};
+
+&spmi_bus {
+        qcom,pm8916@1 {
+                qcom,vibrator@c000 {
+                        status = "okay";
+                        qcom,vib-timeout-ms = <30000>;
+                        qcom,vib-vtg-level-mV = <2800>;
+                        qcom,vib-vtg-level-mV-haptic = <2800>;
+                        qcom,vib-boot-up-vibe-ms = <100>;
+                };
+        };
+};
+
+&sdhc_2 {
+	interrupt-map = <0 &intc 0 125 0
+		1 &intc 0 221 0
+		2 &msm_gpio 118 0>;
+	cd-gpios = <&msm_gpio 118 0x1>;
+};
