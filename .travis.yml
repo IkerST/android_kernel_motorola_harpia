@@ -7,7 +7,7 @@ before_deploy:
       - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 deploy:
    provider: releases
-   api_key: a6cd7271cb1114cce9b27799807af1bdc52c6d80
+   api_key:   08162b68602cdb26156d3d44182f84e3c37adac6
    file: $PWD/Anykernel2/harpia/*.zip
    skip_cleanup: true
 
