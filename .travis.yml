@@ -2,7 +2,7 @@ languaje: bash
 before_deploy:
 - git config --local user.name "IkerST"
 - git config --local user.email "ikersanditrejo@gmail.com"
-- git tag "$KERNEL_NAME-$DATE$VER"
+- git tag "GKernel-$(date +"%d%m%Y")"
 before_install:
 - sudo apt-get update
 - sudo apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib
