@@ -4,8 +4,8 @@ TOOLCHAINDIR=$(pwd)/toolchain/linaro-7.2
 DATE=$(date +"%d%m%Y")
 KERNEL_NAME="GKernel"
 DEVICE="-harpia-"
-VER="-v0.1"
-TYPE="-OREO"
+VER=$(cat version)
+TYPE="-OREO-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 
 export ARCH=arm
