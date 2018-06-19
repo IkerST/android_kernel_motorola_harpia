@@ -1,8 +1,8 @@
 languaje: bash
-before_deploy:
-- git config --local user.name "IkerST"
-- git config --local user.email "ikersanditrejo@gmail.com"
-- git tag "GKernel-$(date +"%d%m%Y")"
+#before_deploy:
+#- git config --local user.name "IkerST"
+#- git config --local user.email "ikersanditrejo@gmail.com"
+#- git tag "GKernel-$(date +"%d%m%Y")"
 before_install:
 - sudo apt-get update
 - sudo apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib
@@ -11,12 +11,12 @@ before_install:
   pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev openjdk-8-jdk
 script:
 - bash harpia.sh
-deploy:
-  provider: releases
-  skip_cleanup: true
-  api_key:
-    secure: Th9LwesqW5v09oqLz7q0DdW7Xg+satFSI6llX+mebAWjON4WWEJzTP0H1gkOcsjrGwCd9faHIMH4XV/id9oMpTaBvVJnHo7T+V5UPMzyWIQx0pIkmOCdr3mnYkOnICjvaKspatjhhArS41wRudPmAzFzA0MOiwO6crfi5SAmD+9pQNfbESlenfOkQOH8MaM3ma3wnY1+oWa7TAVkfq8GSEQ4iTeGjGqVBJ6+aZFZEvQ89ZoPw1QVxvQhxylXskQ7A60zpS7g04rF/khik68gscaxb1isLm4e2qrm/qrSrY1x/MgDokiWR61mmIt8eJvEwcZw769hQppOvX2CFVqK5fp6AOHYhfR5NKTR7ja9MsjQgeaYpy5Mr25E/d1iRg+Dt8FmvCXdlXay+3W/V3pGSJ/XlfUmlAGEUGthKdcDsZznN5sG6thopW0vQ5MkraQgVw9TH/57bq1Ye1dhSxRq3jlViaedWz/VuDR2c2aVFiudsbJcFySr4VOHsxl32e8Ml0Mgn2adzGrtfvcuZubJiXRHWQE2p2ZFUUIzchRNVDqlfHVArKLYikrahKf6TmfHgemrk+BncLHMQwzqzldFk+8lJiUefXLt+vGBJIzj8jafe8bX6ACqFQ5aPsgetH5XuIjUS8H5hQj0LIs+yANO1LnluT9IBXCN//KdTCC4WT0=
-  file: "$(pwd)/Anykernel2/harpia/$KERNEL_NAME$DEVICE$DATE$TYPE$VER.zip"
-  on:
-    repo: IkerST/android_kernel_motorola_harpia
-    branch: hkernel
+#deploy:
+#  provider: releases
+#  skip_cleanup: true
+#  api_key:
+#    secure: Th9LwesqW5v09oqLz7q0DdW7Xg+satFSI6llX+mebAWjON4WWEJzTP0H1gkOcsjrGwCd9faHIMH4XV/id9oMpTaBvVJnHo7T+V5UPMzyWIQx0pIkmOCdr3mnYkOnICjvaKspatjhhArS41wRudPmAzFzA0MOiwO6crfi5SAmD+9pQNfbESlenfOkQOH8MaM3ma3wnY1+oWa7TAVkfq8GSEQ4iTeGjGqVBJ6+aZFZEvQ89ZoPw1QVxvQhxylXskQ7A60zpS7g04rF/khik68gscaxb1isLm4e2qrm/qrSrY1x/MgDokiWR61mmIt8eJvEwcZw769hQppOvX2CFVqK5fp6AOHYhfR5NKTR7ja9MsjQgeaYpy5Mr25E/d1iRg+Dt8FmvCXdlXay+3W/V3pGSJ/XlfUmlAGEUGthKdcDsZznN5sG6thopW0vQ5MkraQgVw9TH/57bq1Ye1dhSxRq3jlViaedWz/VuDR2c2aVFiudsbJcFySr4VOHsxl32e8Ml0Mgn2adzGrtfvcuZubJiXRHWQE2p2ZFUUIzchRNVDqlfHVArKLYikrahKf6TmfHgemrk+BncLHMQwzqzldFk+8lJiUefXLt+vGBJIzj8jafe8bX6ACqFQ5aPsgetH5XuIjUS8H5hQj0LIs+yANO1LnluT9IBXCN//KdTCC4WT0=
+#  file: "$(pwd)/Anykernel2/harpia/$KERNEL_NAME$DEVICE$DATE$TYPE$VER.zip"
+#  on:
+#    repo: IkerST/android_kernel_motorola_harpia
+#    branch: hkernel
