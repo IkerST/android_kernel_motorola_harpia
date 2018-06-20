@@ -30,9 +30,9 @@ abort() {
   umount /data 2>/dev/null;
   exit 1;
 }
-ui_print "--------------------------------------------------"
-ui_print "----------------GKernel For Harpia----------------"
-ui_print "--------------------------------------------------"
+ui_print "--------------------------------------------------";
+ui_print "----------------GKernel For Harpia----------------";
+ui_print "--------------------------------------------------";
 show_progress 1.34 4;
 cleanup;
 mkdir -p /tmp/anykernel/bin;
@@ -67,7 +67,7 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
   fi;
 fi;
 
-ui_print "Installing Kernel"
+ui_print "Installing Kernel";
 for i in $($bb --list); do
   $bb ln -s $bb /tmp/anykernel/bin/$i;
 done;
@@ -82,6 +82,18 @@ fi;
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
 fi;
+
+ui_print "Adding Addon.d Script";
+cp /tmp/anykernel/59kernel /system/addon.d/59Kernel;
+chmod 755 /system/addon.d/59kernel;
+
+ui_print "|";
+ui_print "---> Adding kernel files";
+mkdir -p /data/adb/kernel/tools;
+cp /tmp/anykernel/busybox /data/adb/kernel/;
+cp /tmp/anykernel/tools/* /data/adb/kernel/tools/
+cp /tmp/anykernel/anykernel.sh /data/adb/kernel/;
+ui_print "Kernel files stored in /data/adb/kernel"
 
 umount /system;
 umount /data 2>/dev/null;
