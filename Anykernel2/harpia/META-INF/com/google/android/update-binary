@@ -79,10 +79,6 @@ if [ $? != "0" ]; then
   abort;
 fi;
 
-if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
-  cleanup;
-fi;
-
 ui_print "Adding Addon.d Script";
 cp /tmp/anykernel/59kernel /system/addon.d/59Kernel;
 chmod 755 /system/addon.d/59kernel;
@@ -94,6 +90,10 @@ cp /tmp/anykernel/busybox /data/adb/kernel/;
 cp /tmp/anykernel/tools/* /data/adb/kernel/tools/
 cp /tmp/anykernel/anykernel.sh /data/adb/kernel/;
 ui_print "Kernel files stored in /data/adb/kernel"
+
+if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
+  cleanup;
+fi;
 
 umount /system;
 umount /data 2>/dev/null;
