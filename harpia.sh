@@ -1,3 +1,6 @@
+figlet "GKernel"
+echo "Starting build"
+
 KERNEL_DIR=$PWD
 ANYKERNEL_DIR=$KERNEL_DIR/Anykernel2/harpia
 TOOLCHAINDIR=$(pwd)/toolchain/linaro-7.2
