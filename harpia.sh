@@ -28,7 +28,7 @@ make harpia_defconfig
 CORES=$( nproc --all)
 THREADS=$( echo $CORES + $CORES | bc )
 echo "Building with " $CORES " CPU(s)"
-echo "And " $TREADS " threads"
+echo "And " $THREADS " threads"
 make -j$THREADS 2>&1 | tee $LOG_FILE
 
 if [ -e  arch/arm/boot/zImage ]; 
