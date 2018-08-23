@@ -55,4 +55,6 @@ echo "Uploading file"
 curl -H "Max-Downloads: 1" -H "Max-Days: 1" --upload-file $FINAL_ZIP https://transfer.sh/$FINAL_ZIP
 else
 echo "Kernel not compiled,fix errors and compile again"
-fi;
+fi
+echo "Uploading logs"
+curl -H "Max-Downloads: 1" -H "Max-Days: 1" --upload-file $LOG_FILE https://transfer.sh/$FINAL_ZIP
