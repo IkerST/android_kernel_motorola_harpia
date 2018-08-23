@@ -1,5 +1,4 @@
 figlet "GKernel"
-figlet "Testing"
 echo "Starting build"
 
 KERNEL_DIR=$PWD
