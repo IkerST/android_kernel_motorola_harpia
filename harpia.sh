@@ -1,4 +1,5 @@
 figlet "GKernel"
+figlet "Testing"
 echo "Starting build"
 
 KERNEL_DIR=$PWD
@@ -10,7 +11,7 @@ DEVICE="-harpia-"
 VER=$(cat version)
 TYPE="-OREO-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
-LOG_FILE=FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".log
+LOG_FILE="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".log
 
 export ARCH=arm
 export KBUILD_BUILD_USER="ist"
@@ -24,8 +25,11 @@ rm arch/arm/boot/zImage #Just to make sure it doesn't make flashable zip with pr
 fi;
 
 make harpia_defconfig
-echo "Building with " $( nproc -all) " CPU(s)"
-make -j$( nproc --all ) 2>&1 | tee $LOG_FILE
+CORES=$( nproc --all)
+THREADS=$( echo $CORES + $CORES | bc )
+echo "Building with " $CORES " CPU(s)"
+echo "And " $THREADS " threads"
+make -j$THREADS 2>&1 | tee $LOG_FILE
 
 if [ -e  arch/arm/boot/zImage ]; 
 then
