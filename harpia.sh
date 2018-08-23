@@ -25,7 +25,7 @@ rm arch/arm/boot/zImage #Just to make sure it doesn't make flashable zip with pr
 fi;
 
 make harpia_defconfig
-echo "Building with " $( nproc -all) " CPU(s)"
+echo "Building with " $( nproc --all) " CPU(s)"
 make -j$( nproc --all ) 2>&1 | tee $LOG_FILE
 
 if [ -e  arch/arm/boot/zImage ]; 
