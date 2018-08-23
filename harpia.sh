@@ -12,6 +12,9 @@ VER=$(cat version)
 TYPE="-OREO-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
 LOG_FILE="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".log
+PATCHES=$(ls -1 $(pwd)/patches/ | grep .patch)
+CORES=$( nproc --all)
+THREADS=$( echo $CORES + $CORES | bc )
 
 export ARCH=arm
 export KBUILD_BUILD_USER="ist"
@@ -24,14 +27,16 @@ then
 rm arch/arm/boot/zImage #Just to make sure it doesn't make flashable zip with previous zImage
 fi;
 
+echo "Preparing build"
 make harpia_defconfig
-CORES=$( nproc --all)
-THREADS=$( echo $CORES + $CORES | bc )
+echo "Applying patches"
+for a in $PATCHES
+
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
 make -j$THREADS 2>&1 | tee $LOG_FILE
 
-if [ -e  arch/arm/boot/zImage ]; 
+if [ -e  arch/arm/boot/zImage ];
 then
 echo "Kernel compilation completed"
 cp $KERNEL_DIR/arch/arm/boot/zImage $ANYKERNEL_DIR/
