@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 figlet "GKernel"
 figlet "Testing"
 echo "Starting build"
