@@ -800,7 +800,8 @@ void rfkill_resume_polling(struct rfkill *rfkill)
 	if (!rfkill->ops->poll)
 		return;
 
-	queue_delayed_work(system_power_efficient_wq, &rfkill->poll_work, 0);
+	queue_delayed_work(system_power_efficient_wq,
+			   &rfkill->poll_work, 0);
 }
 EXPORT_SYMBOL(rfkill_resume_polling);
 
@@ -908,7 +909,9 @@ static void rfkill_poll(struct work_struct *work)
 	 */
 	rfkill->ops->poll(rfkill, rfkill->data);
 
-	queue_delayed_work(system_power_efficient_wq, &rfkill->poll_work, round_jiffies_relative(POLL_INTERVAL));
+	queue_delayed_work(system_power_efficient_wq,
+		&rfkill->poll_work,
+		round_jiffies_relative(POLL_INTERVAL));
 }
 
 static void rfkill_uevent_work(struct work_struct *work)
@@ -971,7 +974,9 @@ int __must_check rfkill_register(struct rfkill *rfkill)
 	INIT_WORK(&rfkill->sync_work, rfkill_sync_work);
 
 	if (rfkill->ops->poll)
-		queue_delayed_work(system_power_efficient_wq, &rfkill->poll_work, round_jiffies_relative(POLL_INTERVAL));
+		queue_delayed_work(system_power_efficient_wq,
+			&rfkill->poll_work,
+			round_jiffies_relative(POLL_INTERVAL));
 
 	if (!rfkill->persistent || rfkill_epo_lock_active) {
 		schedule_work(&rfkill->sync_work);
