@@ -11,7 +11,7 @@ DEVICE="-harpia-"
 VER=$(cat version)
 TYPE="-OREO-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
-LOG_FILE=FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".log
+LOG_FILE="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".log
 
 export ARCH=arm
 export KBUILD_BUILD_USER="ist"
