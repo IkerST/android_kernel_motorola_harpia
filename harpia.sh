@@ -31,16 +31,16 @@ fi;
 
 echo "Preparing build"
 make harpia_defconfig
-echo "Applying patches"
-cd patches
-for a in $PATCHES
-do
-  patch patch -p1 < $a
-done
-cd ..
+#echo "Applying patches"
+#cd patches
+#for a in $PATCHES
+#do
+#  patch patch -p1 < $a
+#done
+#cd ..
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
-make -j$THREADS >&log
+make -j$THREADS 2>&1 | tee $LOG_FILE
 
 if [ -e  arch/arm/boot/zImage ];
 then
