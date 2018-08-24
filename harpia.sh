@@ -40,7 +40,7 @@ done
 cd ..
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
-make -j$THREADS 2>&1 | tee $LOG_FILE
+make -j$THREADS >&log
 
 if [ -e  arch/arm/boot/zImage ];
 then
