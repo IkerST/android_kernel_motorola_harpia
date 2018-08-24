@@ -32,9 +32,9 @@ modules.builtin
 *.lzma
 *.xz
 *.lzo
-*.patch
+!*.patch
 *.gcno
-*-log
+*.log
 
 #
 # Top-level generic files
@@ -70,7 +70,7 @@ arch/*/include/generated
 patches-*
 
 # quilt's files
-patches
+#patches
 series
 
 # cscope files

@@ -26,18 +26,22 @@ export USE_CCACHE=1
 
 if [ -e  arch/arm/boot/zImage ];
 then
-rm arch/arm/boot/zImage #Just to make sure it doesn't make flashable zip with previous zImage
+#Just to make sure it doesn't make flashable zip with previous zImage
+rm arch/arm/boot/zImage
 fi;
+
+# Avoid errors when disabling log
+touch $LOG_FILE
 
 echo "Preparing build"
 make harpia_defconfig
-#echo "Applying patches"
-#cd patches
-#for a in $PATCHES
-#do
-#  patch patch -p1 < $a
-#done
-#cd ..
+echo "Applying patches"
+cd patches
+for a in $PATCHES
+do
+  patch patch -p1 < $a
+done
+cd ..
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
 make -j$THREADS 2>&1 | tee $LOG_FILE
@@ -55,8 +59,10 @@ zip -r9 $FINAL_ZIP * -x *.zip $FINAL_ZIP
 echo "Flashable zip Created"
 echo "Uploading file"
 curl -H "Max-Downloads: 1" -H "Max-Days: 1" --upload-file $FINAL_ZIP https://transfer.sh/$FINAL_ZIP
+echo ""
 else
 echo "Kernel not compiled,fix errors and compile again"
 fi
 echo "Uploading logs"
-curl -H "Max-Downloads: 1" -H "Max-Days: 1" --upload-file $LOG_FILE https://transfer.sh/$FINAL_ZIP
+echo ""
+curl -H "Max-Downloads: 1" -H "Max-Days: 1" --upload-file $LOG_FILE https://transfer.sh/$LOG_FILE
