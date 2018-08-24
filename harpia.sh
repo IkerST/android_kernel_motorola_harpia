@@ -28,7 +28,7 @@ CORES=$( nproc --all)
 THREADS=$( echo $CORES + $CORES | bc )
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
-make -j$THREADS 2>&1 | tee $LOG_FILE
+make -j$THREADS
 
 if [ -e  arch/arm/boot/zImage ]; 
 then
