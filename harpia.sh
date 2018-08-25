@@ -13,7 +13,6 @@ DEVICE="-harpia-"
 VER=$(cat version)
 TYPE="-OREO-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
-LOG_FILE="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".log
 PATCHES=$(ls -1 $(pwd)/patches/ | grep .patch)
 CORES=$( nproc --all)
 THREADS=$( echo $CORES + $CORES | bc )
@@ -30,9 +29,6 @@ then
 rm arch/arm/boot/zImage
 fi;
 
-# Avoid errors when disabling log
-touch $LOG_FILE
-
 echo "Preparing build"
 make harpia_defconfig
 #echo "Applying patches"
@@ -44,7 +40,7 @@ make harpia_defconfig
 #cd ..
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
-make -j$THREADS 2>&1 | tee $LOG_FILE
+make -j$THREADS
 
 if [ -e  arch/arm/boot/zImage ];
 then
@@ -65,4 +61,3 @@ echo "Kernel not compiled,fix errors and compile again"
 fi
 echo "Uploading logs"
 echo ""
-curl -H "Max-Downloads: 1" -H "Max-Days: 1" --upload-file $LOG_FILE https://transfer.sh/$LOG_FILE
