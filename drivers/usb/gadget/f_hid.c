@@ -215,11 +215,10 @@ static ssize_t f_hidg_read(struct file *file, char __user *buffer,
 	if (!access_ok(VERIFY_WRITE, buffer, count))
 		return -EFAULT;
 
-
-			if (hacky_device_list_check(hidg)) {
-				pr_err("%s: trying to read from device %p that was destroyed\n", __func__, hidg);
-				return -EIO;
-			}
+	if (hacky_device_list_check(hidg)) {
+		pr_err("%s: trying to read from device %p that was destroyed\n", __func__, hidg);
+		return -EIO;
+	}
 
 	spin_lock_irqsave(&hidg->spinlock, flags);
 
@@ -291,6 +290,11 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
 	if (!access_ok(VERIFY_READ, buffer, count))
 		return -EFAULT;
 
+	if (hacky_device_list_check(hidg)) {
+		pr_err("%s: trying to write to device %p that was destroyed\n", __func__, hidg);
+		return -EIO;
+	}
+
 	mutex_lock(&hidg->lock);
 
 #define WRITE_COND (!hidg->write_pending)
@@ -305,10 +309,10 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
 				hidg->write_queue, WRITE_COND))
 			return -ERESTARTSYS;
 
-			if (hacky_device_list_check(hidg)) {
-				pr_err("%s: trying to write to device %p that was destroyed\n", __func__, hidg);
-				return -EIO;
-			}
+		if (hacky_device_list_check(hidg)) {
+			pr_err("%s: trying to write to device %p that was destroyed\n", __func__, hidg);
+			return -EIO;
+		}
 
 		mutex_lock(&hidg->lock);
 	}
@@ -460,14 +464,12 @@ static int hidg_setup(struct usb_function *f,
 	case ((USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE) << 8
 		  | HID_REQ_GET_PROTOCOL):
 		VDBG(cdev, "get_protocol\n");
-
 		length = min_t(unsigned, length, 1);
 		if (hidg->bInterfaceSubClass == USB_INTERFACE_SUBCLASS_BOOT)
 			((u8 *) req->buf)[0] = 0;	/* Boot protocol */
 		else
 			((u8 *) req->buf)[0] = 1;	/* Report protocol */
 		goto respond;
-
 		break;
 
 	case ((USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE) << 8
@@ -636,14 +638,14 @@ const struct file_operations f_hidg_fops = {
 	.llseek		= noop_llseek,
 };
 
- static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
 {
 	struct usb_ep		*ep;
 	struct f_hidg		*hidg = func_to_hidg(f);
 	int			status;
 	dev_t			dev;
 
- 	pr_info("%s: creating device %p\n", __func__, hidg);
+	pr_info("%s: creating device %p\n", __func__, hidg);
 
 	/* allocate instance-specific interface IDs, and patch descriptors */
 	status = usb_interface_id(c, f);
@@ -710,8 +712,7 @@ const struct file_operations f_hidg_fops = {
 		goto fail;
 
 	device_create(hidg_class, NULL, dev, NULL, "%s%d", "hidg", hidg->minor);
-
- 	hacky_device_list_add(hidg);
+	hacky_device_list_add(hidg);
 
 	return 0;
 
@@ -742,10 +743,10 @@ static void hidg_unbind(struct usb_configuration *c, struct usb_function *f)
 
 	/* disable/free request and end point */
 	usb_ep_disable(hidg->in_ep);
-	usb_ep_dequeue(hidg->in_ep, hidg->req);
 	/* TODO: calling this function crash kernel,
 	   not calling this funct ion crash kernel inside f_hidg_write */
 	/* usb_ep_dequeue(hidg->in_ep, hidg->req); */
+
 	kfree(hidg->req->buf);
 	usb_ep_free_request(hidg->in_ep, hidg->req);
 
