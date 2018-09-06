@@ -54,11 +54,6 @@ git log --graph --pretty=format:'%s' --abbrev-commit -n 200  > changelog.txt
 echo "Changelog generated"
 zip -r9 $FINAL_ZIP * -x *.zip $FINAL_ZIP
 echo "Flashable zip Created"
-echo "Uploading file"
-curl -H "Max-Days: 1" --upload-file $FINAL_ZIP https://transfer.sh/$FINAL_ZIP
-echo ""
 else
 echo "Kernel not compiled,fix errors and compile again"
 fi
-echo "Uploading logs"
-echo ""
