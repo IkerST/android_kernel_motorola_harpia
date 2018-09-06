@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 figlet "GKernel"
-figlet "Testing"
-echo "Current dir: " $(pwd)
 echo "Starting build"
 
 KERNEL_DIR=$PWD
