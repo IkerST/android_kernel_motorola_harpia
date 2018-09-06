@@ -15,7 +15,9 @@ deploy:
   provider: releases
   api_key:
     secure: nk1uavWmNR9JkkFqArkyBUQhSYepkdalx91fJVZDCoCqODJyUZd45JI+JilZFnyVYJoKVSly0DSSsVzj7DTqgbA1H7JFjqnPF0IbyQKd623BL0t778KaH8nrjlB3jK/gvz8xULzVp5V59Urk7nd5QXzK6S8F99VDELke7YgGTMRFRFJuDRYNbhU/udTtSo6sKqBvrkjBjff/AIDj9GXX5a5iDqVU80kIrCHrcqTqejLd3FByzdxho7Crl8SRxwo9wZTOmuHPE/gAmO/xdxioN6vHJGCey+2DH/G3d7gDyi5GRiEhY0unQ9ZEO1nKc8k1X/EV0BdOsrrWoBZ2ovn7y9ZFBEiXqUGjLLpIC8lEXxx3OcLM7giFLaua539URueQf4Zr8/2ES1BKODBPbyvO9J4Wg+OQV/yrcI6nn2xa5y0Mxxyn/iOdKYsGIw6v0wCQ99i/gT+k/KWsGV9AVNqeo6VtIPxJoMnEOg6T3gW0cqF+S1k+JnHhjrepk9Aaj/jhQYhiJf2exb8SuGto8+9178cVrIm5DW2l8bEWCsSZQl/2Nfks/ZHGPH5I3v6F4Z1gqaS3L0os/SyJrDXMHZD1MXO0pPdj1Ks2aweIDvwQVyoz6eCSUlt/4l5ovWBvw5GNsAert8rBcwATUoZ1sc+v0/z2AmuMn6qkGleZQe/zAO8=
+  file_glob: true
   file: Anykernel2/harpia/*.zip
+  skip_cleanup: true
   on:
     repo: IkerST/android_kernel_motorola_harpia
     branch: gkernel-testing
