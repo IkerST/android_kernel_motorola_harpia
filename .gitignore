@@ -1,3 +1,4 @@
+
 #
 # NOTE! Don't add files that are generated in specific
 # subdirectories here. Add them in the ".gitignore" file
@@ -31,8 +32,9 @@ modules.builtin
 *.lzma
 *.xz
 *.lzo
-*.patch
+!*.patch
 *.gcno
+*.log
 
 #
 # Top-level generic files
@@ -68,7 +70,7 @@ arch/*/include/generated
 patches-*
 
 # quilt's files
-patches
+#patches
 series
 
 # cscope files
