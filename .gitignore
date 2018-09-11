@@ -32,7 +32,7 @@ modules.builtin
 *.lzma
 *.xz
 *.lzo
-!*.patch
+*.patch
 *.gcno
 *.log
 
