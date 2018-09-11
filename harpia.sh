@@ -12,7 +12,6 @@ DEVICE="-harpia-"
 VER=$(cat version)
 TYPE="-OREO-"
 FINAL_ZIP="$KERNEL_NAME""$DEVICE""$DATE""$TYPE""$VER".zip
-PATCHES=$(ls -1 $(pwd)/patches/ | grep .patch)
 CORES=$( nproc --all)
 THREADS=$( echo $CORES + $CORES | bc )
 
@@ -30,13 +29,6 @@ fi;
 
 echo "Preparing build"
 make harpia_defconfig
-#echo "Applying patches"
-#cd patches
-#for a in $PATCHES
-#do
-#  patch patch -p1 < $a
-#done
-#cd ..
 echo "Building with " $CORES " CPU(s)"
 echo "And " $THREADS " threads"
 make -j$THREADS
