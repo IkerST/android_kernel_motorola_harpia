@@ -622,9 +622,10 @@ config SND_SOC_FSA8500
 
 config SOUND_CONTROL
 	bool "Sound control for wcd9335"
+	default y
+	help
+	Flar2's audio mod
 
 config SOUND_CONTROL_HAX_3_GPL
-	tristate "new wcd93xx sound control hax"
-	default y
-	help 
+	help
 	  FauxSound WCD93xx chipset sound control hacks 3.0 for deeper hax
