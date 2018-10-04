@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/IkerST/android_kernel_motorola_harpia.svg?branch=gkernel-testing)](https://travis-ci.com/IkerST/android_kernel_motorola_harpia)
 
+[![Build Status](https://semaphoreci.com/api/v1/ikerst/android_kernel_motorola_harpia/branches/gkernel/badge.svg)](https://semaphoreci.com/ikerst/android_kernel_motorola_harpia)
 
 Linux kernel release 3.x <http://kernel.org/>
 
